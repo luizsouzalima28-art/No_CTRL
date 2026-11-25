@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0b0d">
+  <meta name="description" content="NO CONTROL — Streetwear, graffiti e cultura urbana.">
+  <title>NO CONTROL® | Streetwear</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ENTRADA -->
+  <section id="lobby" class="lobby-screen">
+    <div class="brand-logo">NO CONTROL<span>®</span></div>
+    <p class="tagline">STREETWEAR • GRAFFITI • CULTURE</p>
+
+    <div class="canvas-container">
+      <canvas id="sprayCanvas"></canvas>
+      <div class="canvas-controls">
+        <label>Cor <input type="color" id="sprayColor" value="#ff0055"></label>
+        <label>Tamanho <input type="range" id="spraySize" min="2" max="30" value="10"></label>
+        <button id="btnClearCanvas">Limpar muro</button>
+        <button id="btnAutoStencil" class="highlight-btn">Auto Wildstyle</button>
+      </div>
+    </div>
+
+    <div class="entry-box">
+      <h2>ENTRE PARA O BANDO.</h2>
+      <input type="text" id="usernameInput" placeholder="Seu vulgo / Nome" autocomplete="off">
+      <input type="email" id="emailInput" placeholder="Seu e-mail" autocomplete="email">
+      <input type="password" id="passwordInput" placeholder="Sua senha" autocomplete="current-password">
+      <button id="btnEnterShop" class="btn-primary">ENTRAR NA NO CONTROL →</button>
+      <p class="entry-note">A RUA É NOSSA. O ESTILO TAMBÉM.</p>
+    </div>
+
+    <div class="scanner-box">
+      <p>📷 ESCANEAR QR CODE</p>
+      <button id="btnToggleCamera" class="btn-secondary">Ativar câmera</button>
+      <div id="qr-reader" class="hidden"></div>
+      <p id="qrResult" class="status-msg"></p>
+    </div>
+  </section>
+
+  <!-- LOJA -->
+  <div id="shop" class="shop-screen hidden">
+
+    <header class="navbar">
+      <div class="nav-left-group">
+        <div class="nav-logo-n">N</div>
+        <div class="nav-brand-title">
+          NO CONTROL<small>® | STREETWEAR</small>
+        </div>
+        <span id="userTag" class="user-badge"></span>
+      </div>
+
+      <nav class="nav-center-links">
+        <a href="#" id="navHome" class="active">Home</a>
+        <a href="#productGrid">Coleção</a>
+        <a href="#" id="btnVoltarMuro">Muro Spray</a>
+      </nav>
+
+      <div class="nav-right">
+        <button id="btnOpenAdmin" class="nav-admin hidden">ADMIN</button>
+        <button class="nav-icon-btn" id="btnOpenCart">🛒 <span id="cartCount">0</span></button>
+      </div>
+    </header>
+
+    <div class="shop-workspace">
+
+      <aside class="left-sidebar">
+        <button class="side-icon active" data-filter="all" title="Início">⌂</button>
+        <button class="side-icon" data-filter="hoodie" title="Moletons">▣</button>
+        <button class="side-icon" id="btnSideCart" title="Carrinho">🛍</button>
+      </aside>
+
+      <main class="shop-main-area">
+
+        <section class="shop-hero">
+          <div class="brand-intro">
+            <span class="brand-line"></span>
+            NO CONTROL®
+            <span class="brand-line"></span>
+          </div>
+
+          <p class="hero-subtitle">WE DON'T FOLLOW RULES. WE CREATE OUR OWN.</p>
+          <h1>DROP #01 — STREET REBELLION</h1>
+          <p class="hero-description">Vista sua atitude. Expresse sua identidade.</p>
+
+          <div class="category-filters">
+            <button class="filter-btn active" data-cat="all">TODOS</button>
+            <button class="filter-btn" data-cat="hoodie">HOODIES</button>
+            <button class="filter-btn" data-cat="tee">CAMISETAS</button>
+            <button class="filter-btn" data-cat="pants">CALÇAS</button>
+            <button class="filter-btn" data-cat="shoes">CALÇADOS</button>
+          </div>
+        </section>
+
+        <div class="catalog-heading">
+          <div>
+            <span>NO CONTROL COLLECTION</span>
+            <h2>PEÇAS EXCLUSIVAS.</h2>
+          </div>
+          <span id="productQuantity">0 PEÇAS</span>
+        </div>
+
+        <section class="product-grid" id="productGrid"></section>
+
+        <footer class="shop-footer">
+          <div class="footer-logo">NO CONTROL®</div>
+          <p>STREETWEAR IS AN ATTITUDE.</p>
+          <small>© 2026 NO CONTROL — TODOS OS DIREITOS RESERVADOS.</small>
+        </footer>
+      </main>
+
+      <aside class="right-qr-widgets">
+        <div class="qr-card-widget">
+          <strong>NO CONTROL</strong>
+          <div class="qr-mini-box">N</div>
+          <small>ACESSO VIP</small>
+        </div>
+        <div class="qr-card-widget" id="btnQuickScanner">
+          <strong>QR SCANNER</strong>
+          <div class="qr-mini-box">▦</div>
+          <small>ESCANEAR</small>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- PAINEL ADMIN -->
+  <section id="adminPanel" class="admin-screen hidden">
+    <header class="admin-header">
+      <div>
+        <span>NO CONTROL® / MANAGEMENT</span>
+        <h1>PAINEL ADMINISTRATIVO</h1>
+        <p>Gerencie sua coleção.</p>
+      </div>
+      <button id="btnCloseAdmin" class="btn-secondary">← VOLTAR À LOJA</button>
+    </header>
+
+    <div class="admin-stats">
+      <div class="stat-card"><span>PRODUTOS</span><strong id="adminTotal">0</strong></div>
+      <div class="stat-card"><span>CATEGORIAS</span><strong>04</strong></div>
+      <div class="stat-card"><span>MARCA</span><strong>NO CONTROL</strong></div>
+    </div>
+
+    <div class="add-product-box">
+      <span class="section-kicker">NOVO CADASTRO</span>
+      <h2>➕ ADICIONAR PEÇA</h2>
+
+      <div class="add-product-grid">
+        <input type="text" id="newProdName" placeholder="Nome do produto">
+
+        <select id="newProdCat">
+          <option value="tee">Camiseta</option>
+          <option value="hoodie">Hoodie / Moletom</option>
+          <option value="pants">Calça</option>
+          <option value="shoes">Calçado</option>
+        </select>
+
+        <input type="number" step="0.01" min="0" id="newProdPrice" placeholder="Preço (R$)">
+        <input type="text" id="newProdBadge" placeholder="Etiqueta (NOVO, DROP...)">
+        <input type="number" min="0" max="99" id="newProdDiscount" placeholder="Desconto (%)" value="0">
+        <input type="text" id="newProdSizes" placeholder="Tamanhos" value="P, M, G, GG">
+        <input type="text" id="newProdColors" placeholder="Cores" value="Preto, Branco">
+
+        <div class="file-field">
+          <label for="newProdFile">FOTO DO PRODUTO</label>
+          <input type="file" id="newProdFile" accept="image/*">
+          <img id="newProdPreview" class="admin-upload-preview hidden" alt="Prévia do produto">
+        </div>
+      </div>
+
+      <button id="btnAddProduct" class="btn-primary full-width">CADASTRAR PRODUTO</button>
+      <p class="admin-note">Os produtos são armazenados neste navegador.</p>
+    </div>
+
+    <div class="manage-heading">
+      <h2>GERENCIAR COLEÇÃO</h2>
+      <span>EDITAR / EXCLUIR</span>
+    </div>
+
+    <div id="adminProductList" class="admin-product-list"></div>
+  </section>
+
+  <!-- CARRINHO -->
+  <div id="cartDrawer" class="cart-drawer hidden">
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <div class="cart-content">
+      <div class="cart-header">
+        <div>
+          <span>NO CONTROL®</span>
+          <h2>SEU CARRINHO</h2>
+        </div>
+        <button id="btnCloseCart">×</button>
+      </div>
+
+      <div id="cartItems" class="cart-items"></div>
+
+      <div class="cart-footer">
+        <div class="price-row"><span>Subtotal:</span><span id="subtotalVal">R$ 0,00</span></div>
+        <div class="price-row discount"><span>Descontos:</span><span id="discountVal">R$ 0,00</span></div>
+        <div class="price-row total"><span>Total:</span><span id="totalVal">R$ 0,00</span></div>
+        <button id="btnCheckout" class="btn-primary full-width">FINALIZAR COM PIX →</button>
+        <small>Desconto adicional de 5% no PIX.</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIX -->
+  <div id="pixModal" class="modal hidden">
+    <div class="modal-content">
+      <button id="btnClosePix" class="close-btn">×</button>
+      <span class="section-kicker">NO CONTROL CHECKOUT</span>
+      <h2>PAGAMENTO PIX</h2>
+      <p class="pix-timer">Demonstração de pagamento</p>
+
+      <div class="qr-placeholder">
+        <div class="pix-symbol">PIX</div>
+        <small>QR CODE NÃO CONFIGURADO</small>
+      </div>
+
+      <p class="pix-warning">A chave abaixo é apenas demonstrativa. Configure uma integração de pagamento real antes de receber pedidos.</p>
+
+      <div class="pix-code-box">
+        <input type="text" readonly id="pixKeyInput" value="00020126580014br.gov.bcb.pix0136nocontrol-streetwear-drop01">
+        <button id="btnCopyPix" class="btn-secondary">COPIAR</button>
+      </div>
+      <p id="copyStatus" class="status-msg"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
